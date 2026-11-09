@@ -2,12 +2,17 @@ export const profile = {
   name: "Mary Immaculata Akussah",
   title: "Frontend Developer & Cloud Engineer",
   email: "maryakussah123@gmail.com",
-  phone: "+233 55 470 2282",
+  phone: "+233 54 072 2872",
   city: "Greater Accra, Ghana",
   degree: "BSc. Computer Science",
   github: "https://github.com/MaryAkussah",
   linkedin: "https://linkedin.com/in/mary-immaculata-akussah",
 };
+
+export const aboutBio = [
+  "I'm a Frontend Developer and Cloud Engineer based in Accra, Ghana. I build responsive, accessible web applications with React, Next.js, TypeScript and Tailwind CSS — from marketing sites to full role-based dashboards.",
+  "On the cloud side, I design serverless and containerized solutions on AWS, with CI/CD pipelines powered by Docker, Terraform and GitHub Actions. My background in IT audit and GRC means I build with security, compliance and reliability in mind from day one.",
+];
 
 export const navLinks = [
   { path: "/", label: "Home" },
@@ -56,6 +61,7 @@ export const projects = [
   {
     title: "TYP — Testing Your Preparedness",
     subtitle: "Multi-Tenant Exam-Prep & Course Marketplace Platform",
+    tagline: "Exam-Prep Platform",
     url: "https://testingyourpreparedness.com",
     label: "testingyourpreparedness.com",
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
@@ -70,6 +76,7 @@ export const projects = [
   {
     title: "BestMart",
     subtitle: "Multi-Vendor E-Commerce Marketplace",
+    tagline: "E-Commerce Marketplace",
     url: "https://bestmart-one.vercel.app",
     label: "bestmart-one.vercel.app",
     stack: ["React", "Vite", "React Router", "Context API", "Tailwind CSS"],
@@ -84,6 +91,7 @@ export const projects = [
   {
     title: "Winners Family School",
     subtitle: "K12 School Website",
+    tagline: "School Website",
     url: "https://winnersfamilyschool.vercel.app",
     label: "winnersfamilyschool.vercel.app",
     stack: ["React", "TypeScript", "Vite", "React Router"],
@@ -140,6 +148,7 @@ export const education = [
 
 export const experience = [
   {
+    type: "cloud",
     role: "Technical Operations & Content Systems Lead",
     period: "May 2026 - Present · 5 mos",
     place: "Africa Web3 Institute, Ghana",
@@ -149,6 +158,7 @@ export const experience = [
     ],
   },
   {
+    type: "cloud",
     role: "Cloud Engineer",
     period: "Jun 2025 - Oct 2025 · 5 mos",
     place: "Azubi Africa",
@@ -158,6 +168,7 @@ export const experience = [
     ],
   },
   {
+    type: "engineering",
     role: "Frontend Developer",
     period: "May 2025 - Jul 2025 · 3 mos",
     place: "Touch Stack Technologies, Accra",
@@ -167,6 +178,7 @@ export const experience = [
     ],
   },
   {
+    type: "marketing",
     role: "Digital Marketing",
     period: "Nov 2024 - Apr 2025 · 6 mos",
     place: "Incas Diagnostics, Greater Accra Region, Ghana",
@@ -175,6 +187,7 @@ export const experience = [
     ],
   },
   {
+    type: "engineering",
     role: "Frontend Developer",
     period: "May 2023 - Oct 2024 · 1 yr 6 mos",
     place: "LabanexIT, Accra",
@@ -183,6 +196,7 @@ export const experience = [
     ],
   },
   {
+    type: "marketing",
     role: "Executive Sales Representative",
     period: "Dec 2022 - Mar 2025 · 2 yrs 4 mos",
     place: "Onlineafrica, Greater Accra Region, Ghana",
@@ -192,6 +206,7 @@ export const experience = [
     ],
   },
   {
+    type: "grc",
     role: "IT Auditor & Compliance Analyst",
     period: "Oct 2021 - Sep 2024 · 3 yrs",
     place: "YesYouCan CyberSecure, Texas, United States",
@@ -202,6 +217,7 @@ export const experience = [
     ],
   },
   {
+    type: "cloud",
     role: "Information Technology Specialist",
     period: "Nov 2021 - Oct 2022 · 1 yr",
     place: "Ghana Revenue Authority, Accra Metropolitan District, Ghana",
@@ -224,27 +240,96 @@ export const certifications = [
 
 export const services = [
   {
+    id: "frontend",
     icon: "code",
     title: "Frontend Development",
+    tagline: "Fast, accessible, responsive web experiences",
     description:
       "Building responsive, accessible web applications with React, Next.js, TypeScript, and Tailwind CSS — from marketing sites to full role-based dashboards.",
+    included: [
+      "Responsive multi-page websites",
+      "Role-based dashboards & admin panels",
+      "Multi-step forms & onboarding wizards",
+      "Reusable component & design systems",
+      "Accessibility: ARIA, focus states, reduced motion",
+      "Performance optimisation & refactoring",
+      "Automated UI testing with Playwright",
+      "API integration with backend teams",
+    ],
+    tools: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "shadcn/ui", "Vite", "React Router", "Bootstrap", "Playwright"],
+    idealFor: "Startups, schools and businesses that need a polished website or a full product dashboard.",
+    metric: { value: "20%", label: "faster page loads after refactoring React components" },
+    proof: "Built TYP, BestMart and Winners Family School — all live in production.",
   },
   {
+    id: "cloud",
     icon: "cloud",
     title: "Cloud & DevOps",
+    tagline: "Scalable, automated infrastructure on AWS",
     description:
       "Designing serverless and containerized solutions on AWS — Lambda, S3, ECS/EKS, CI/CD pipelines with Docker, Terraform, and GitHub Actions.",
+    included: [
+      "Serverless architectures with Lambda & S3",
+      "Container orchestration with ECS, EKS & Kubernetes",
+      "CI/CD pipelines with CodePipeline & GitHub Actions",
+      "Infrastructure as Code with Terraform & CloudFormation",
+      "Networking & access: VPC, IAM, Route 53, CloudFront",
+      "Monitoring & alerting with CloudWatch, CloudTrail & SNS",
+      "Encrypted storage with S3 & KMS",
+      "Zero-downtime deployment strategies",
+    ],
+    tools: ["AWS Lambda", "S3", "EC2", "ECS / EKS", "Kubernetes", "Docker", "Terraform", "CloudFormation", "GitHub Actions", "CloudWatch"],
+    idealFor: "Teams moving to the cloud, or wanting faster, more reliable and automated deployments.",
+    metric: { value: "99.9%", label: "uptime on a Kubernetes platform with zero-downtime deploys" },
+    proof: "Delivered serverless, secure-storage and containerized DevOps projects on AWS.",
   },
   {
+    id: "grc",
     icon: "shield",
     title: "GRC & IT Audit",
+    tagline: "Security, compliance and risk you can trust",
     description:
       "Conducting ITGC testing, SOX and PCI DSS compliance reviews, risk assessments, and third-party risk management for regulated environments.",
+    included: [
+      "IT General Controls (ITGC) testing",
+      "SOX compliance reviews",
+      "PCI DSS compliance assessments",
+      "Risk assessments & risk registers",
+      "Third-party / vendor risk management",
+      "Hashing & encryption testing",
+      "IAM least-privilege & access reviews",
+      "Audit logging & traceability setup",
+    ],
+    tools: ["SOX", "PCI DSS", "ITGC", "Risk Assessment", "TPRM", "AWS IAM", "KMS", "CloudTrail"],
+    idealFor: "Organisations in regulated industries preparing for audits or strengthening their controls.",
+    metric: { value: "3 yrs", label: "hands-on IT audit & compliance experience" },
+    proof: "Served as IT Auditor & Compliance Analyst at YesYouCan CyberSecure.",
   },
   {
+    id: "marketing",
     icon: "marketing",
     title: "Digital Marketing",
+    tagline: "Content that grows engagement and reach",
     description:
       "Producing targeted digital content and campaigns — infographics, video editing, and social strategy — to grow engagement and visibility.",
+    included: [
+      "Infographics & flyer design",
+      "Video editing for social media",
+      "Articles & written content",
+      "Social media campaign management",
+      "Audience growth strategy",
+      "Vendor & customer onboarding support",
+    ],
+    tools: ["Infographics", "Flyers", "Video Editing", "Articles", "Social Campaigns"],
+    idealFor: "Brands, health initiatives and online platforms looking to grow their audience.",
+    metric: { value: "25%", label: "boost in social media engagement for health campaigns" },
+    proof: "Grew audience reach by 30% at Onlineafrica and onboarded 50+ vendors.",
   },
+];
+
+export const processSteps = [
+  { title: "Discover", description: "We talk through your goals, users and constraints so I understand exactly what success looks like." },
+  { title: "Plan & Design", description: "I map out the architecture, components or controls and agree a clear scope and timeline with you." },
+  { title: "Build & Test", description: "I build in small iterations with regular check-ins, testing along the way for quality and accessibility." },
+  { title: "Launch & Support", description: "I deploy, monitor and hand over documentation — and stay available for improvements after launch." },
 ];

@@ -26,21 +26,98 @@ const infoBoxes = [
   },
 ];
 
+// FormSubmit forwards submissions to the email in profile.email (no backend needed).
+const FORM_ENDPOINT = "https://formsubmit.co/ajax";
+
+// Visitor details are remembered only in the visitor's own browser (localStorage).
+const STORAGE_KEY = "contact-details";
+
+function loadSaved() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return data && typeof data === "object" ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+function persist(details) {
+  try {
+    if (details) localStorage.setItem(STORAGE_KEY, JSON.stringify(details));
+    else localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* storage unavailable (private mode etc.) — ignore */
+  }
+}
+
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [saved, setSaved] = useState(loadSaved);
+  const [form, setForm] = useState(() => ({
+    name: saved?.name ?? "",
+    email: saved?.emails?.[0] ?? "",
+    subject: "",
+    message: "",
+  }));
+  const [remember, setRemember] = useState(true);
+  const [honey, setHoney] = useState("");
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (status === "success" || status === "error") setStatus("idle");
   }
 
-  function handleSubmit(e) {
+  function rememberDetails() {
+    if (!remember) {
+      persist(null);
+      setSaved(null);
+      return;
+    }
+    const emails = [form.email, ...(saved?.emails ?? [])]
+      .filter((e, i, arr) => e && arr.findIndex((x) => x.toLowerCase() === e.toLowerCase()) === i)
+      .slice(0, 3);
+    const details = { name: form.name, emails };
+    persist(details);
+    setSaved(details);
+  }
+
+  function clearSaved() {
+    persist(null);
+    setSaved(null);
+    setForm({ ...form, name: "", email: "" });
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    const body = `From: ${form.name} (${form.email})%0D%0A%0D%0A${form.message}`;
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-      form.subject
-    )}&body=${body}`;
-    setSent(true);
+    if (honey) return; // spam bot filled the hidden field
+    setStatus("sending");
+    try {
+      const res = await fetch(`${FORM_ENDPOINT}/${profile.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+          _subject: `Portfolio contact: ${form.subject}`,
+          _replyto: form.email,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false || data.success === "false") throw new Error(data.message);
+      setStatus("success");
+      rememberDetails();
+      setForm(
+        remember
+          ? { name: form.name, email: form.email, subject: "", message: "" }
+          : { name: "", email: "", subject: "", message: "" }
+      );
+    } catch {
+      setStatus("error");
+    }
   }
 
   const inputClass =
@@ -112,10 +189,33 @@ export default function Contact() {
             onSubmit={handleSubmit}
             className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 p-7 space-y-4"
           >
+            {saved?.name && (
+              <motion.div
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-amber-400/10 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300"
+              >
+                <span>
+                  Welcome back, <span className="font-semibold">{saved.name.split(" ")[0]}</span>! Your details are filled in.
+                </span>
+                <button
+                  type="button"
+                  onClick={clearSaved}
+                  className="font-medium text-amber-700 dark:text-amber-400 hover:underline"
+                >
+                  Not you? Clear
+                </button>
+              </motion.div>
+            )}
+
             <div className="grid sm:grid-cols-2 gap-4">
               <input
                 type="text"
+                id="contact-name"
                 name="name"
+                autoComplete="name"
+                autoCapitalize="words"
+                aria-label="Your name"
                 required
                 placeholder="Your Name"
                 value={form.name}
@@ -124,7 +224,12 @@ export default function Contact() {
               />
               <input
                 type="email"
+                id="contact-email"
                 name="email"
+                autoComplete="email"
+                inputMode="email"
+                spellCheck={false}
+                aria-label="Your email"
                 required
                 placeholder="Your Email"
                 value={form.email}
@@ -134,7 +239,10 @@ export default function Contact() {
             </div>
             <input
               type="text"
+              id="contact-subject"
               name="subject"
+              autoComplete="off"
+              aria-label="Subject"
               required
               placeholder="Subject"
               value={form.subject}
@@ -151,22 +259,63 @@ export default function Contact() {
               className={`${inputClass} resize-none`}
             />
 
-            {sent && (
+            <label className="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                className="w-4 h-4 rounded accent-amber-500"
+              />
+              Remember my name and email on this device
+            </label>
+
+            {/* honeypot: hidden from people, catches spam bots */}
+            <input
+              type="text"
+              name="_honey"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honey}
+              onChange={(e) => setHoney(e.target.value)}
+              className="hidden"
+              aria-hidden="true"
+            />
+
+            {status === "success" && (
               <motion.p
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-sm text-emerald-600 dark:text-emerald-400"
+                role="status"
+                className="rounded-lg bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400"
               >
-                Your email client should now be open with your message ready to send.
+                Thank you! Your message has been received, I'll get back to you soon.
+              </motion.p>
+            )}
+            {status === "error" && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                role="alert"
+                className="rounded-lg bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-400"
+              >
+                Sorry, something went wrong. Please try again or email me directly at{" "}
+                <a href={`mailto:${profile.email}`} className="font-semibold underline">
+                  {profile.email}
+                </a>
+                .
               </motion.p>
             )}
 
             <motion.button
               type="submit"
+              disabled={status === "sending"}
               {...bounceHover}
-              className="w-full sm:w-auto px-8 py-3 rounded-full bg-amber-400 text-slate-950 font-semibold shadow-lg shadow-amber-400/30"
+              className="w-full sm:w-auto px-8 py-3 rounded-full bg-amber-400 text-slate-950 font-semibold shadow-lg shadow-amber-400/30 disabled:opacity-70 disabled:cursor-wait inline-flex items-center justify-center gap-2"
             >
-              Send Message
+              {status === "sending" && (
+                <span className="w-4 h-4 rounded-full border-2 border-slate-950/30 border-t-slate-950 animate-spin" />
+              )}
+              {status === "sending" ? "Sending..." : "Send Message"}
             </motion.button>
           </Reveal>
         </div>
