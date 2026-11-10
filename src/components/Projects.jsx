@@ -20,7 +20,7 @@ const filters = [
 /* ---------- Preview panels ---------- */
 
 function BrowserPreview({ project }) {
-  const name = project.title.split(" — ")[0];
+  const name = project.title.split(":")[0];
   return (
     <div className="relative rounded-t-2xl overflow-hidden bg-slate-900">
       <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/80 border-b border-white/5">

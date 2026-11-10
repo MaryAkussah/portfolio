@@ -50,7 +50,7 @@ export default function Hero() {
         </motion.h2>
         <motion.p variants={fadeUp} className="mt-6 text-white/80 max-w-xl">
           Building responsive React/Next.js applications and reliable AWS
-          cloud infrastructure from Accra, Ghana — with a background in IT
+          cloud infrastructure from Accra, Ghana, with a background in IT
           audit and GRC.
         </motion.p>
 

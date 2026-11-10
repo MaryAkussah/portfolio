@@ -87,7 +87,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.1, rotate: -4 }}
           whileTap={{ scale: 0.92 }}
           transition={{ type: "spring", stiffness: 300, damping: 15 }}
-          aria-label="Mary Immaculata Akussah — Home"
+          aria-label="Mary Immaculata Akussah, Home"
           className={`shrink-0 font-display font-extrabold text-xl tracking-tight ${
             overHero || glass ? "text-amber-400" : "text-amber-500 dark:text-amber-400"
           }`}

@@ -10,7 +10,7 @@ export const profile = {
 };
 
 export const aboutBio = [
-  "I'm a Frontend Developer and Cloud Engineer based in Accra, Ghana. I build responsive, accessible web applications with React, Next.js, TypeScript and Tailwind CSS — from marketing sites to full role-based dashboards.",
+  "I'm a Frontend Developer and Cloud Engineer based in Accra, Ghana. I build responsive, accessible web applications with React, Next.js, TypeScript and Tailwind CSS, from marketing sites to full role-based dashboards.",
   "On the cloud side, I design serverless and containerized solutions on AWS, with CI/CD pipelines powered by Docker, Terraform and GitHub Actions. My background in IT audit and GRC means I build with security, compliance and reliability in mind from day one.",
 ];
 
@@ -59,7 +59,7 @@ export const skillGroups = [
 
 export const projects = [
   {
-    title: "TYP — Testing Your Preparedness",
+    title: "TYP: Testing Your Preparedness",
     subtitle: "Multi-Tenant Exam-Prep & Course Marketplace Platform",
     tagline: "Exam-Prep Platform",
     url: "https://testingyourpreparedness.com",
@@ -245,7 +245,7 @@ export const services = [
     title: "Frontend Development",
     tagline: "Fast, accessible, responsive web experiences",
     description:
-      "Building responsive, accessible web applications with React, Next.js, TypeScript, and Tailwind CSS — from marketing sites to full role-based dashboards.",
+      "Building responsive, accessible web applications with React, Next.js, TypeScript, and Tailwind CSS, from marketing sites to full role-based dashboards.",
     included: [
       "Responsive multi-page websites",
       "Role-based dashboards & admin panels",
@@ -259,7 +259,7 @@ export const services = [
     tools: ["React", "Next.js", "TypeScript", "JavaScript", "Tailwind CSS", "shadcn/ui", "Vite", "React Router", "Bootstrap", "Playwright"],
     idealFor: "Startups, schools and businesses that need a polished website or a full product dashboard.",
     metric: { value: "20%", label: "faster page loads after refactoring React components" },
-    proof: "Built TYP, BestMart and Winners Family School — all live in production.",
+    proof: "Built TYP, BestMart and Winners Family School, all live in production.",
   },
   {
     id: "cloud",
@@ -267,7 +267,7 @@ export const services = [
     title: "Cloud & DevOps",
     tagline: "Scalable, automated infrastructure on AWS",
     description:
-      "Designing serverless and containerized solutions on AWS — Lambda, S3, ECS/EKS, CI/CD pipelines with Docker, Terraform, and GitHub Actions.",
+      "Designing serverless and containerized solutions on AWS, including Lambda, S3, ECS/EKS, and CI/CD pipelines with Docker, Terraform, and GitHub Actions.",
     included: [
       "Serverless architectures with Lambda & S3",
       "Container orchestration with ECS, EKS & Kubernetes",
@@ -311,7 +311,7 @@ export const services = [
     title: "Digital Marketing",
     tagline: "Content that grows engagement and reach",
     description:
-      "Producing targeted digital content and campaigns — infographics, video editing, and social strategy — to grow engagement and visibility.",
+      "Producing targeted digital content and campaigns, including infographics, video editing, and social strategy, to grow engagement and visibility.",
     included: [
       "Infographics & flyer design",
       "Video editing for social media",
@@ -331,5 +331,5 @@ export const processSteps = [
   { title: "Discover", description: "We talk through your goals, users and constraints so I understand exactly what success looks like." },
   { title: "Plan & Design", description: "I map out the architecture, components or controls and agree a clear scope and timeline with you." },
   { title: "Build & Test", description: "I build in small iterations with regular check-ins, testing along the way for quality and accessibility." },
-  { title: "Launch & Support", description: "I deploy, monitor and hand over documentation — and stay available for improvements after launch." },
+  { title: "Launch & Support", description: "I deploy, monitor and hand over documentation, then stay available for improvements after launch." },
 ];

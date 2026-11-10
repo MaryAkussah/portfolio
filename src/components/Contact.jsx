@@ -46,7 +46,7 @@ function persist(details) {
     if (details) localStorage.setItem(STORAGE_KEY, JSON.stringify(details));
     else localStorage.removeItem(STORAGE_KEY);
   } catch {
-    /* storage unavailable (private mode etc.) — ignore */
+    /* storage unavailable (private mode etc.), ignore */
   }
 }
 

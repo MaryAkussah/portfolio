@@ -258,7 +258,7 @@ export default function Services() {
         <SectionHeading
           eyebrow="What I Offer"
           title="My Services"
-          description="From pixel-perfect interfaces to secure cloud infrastructure and compliance — end-to-end support for your digital projects."
+          description="From pixel-perfect interfaces to secure cloud infrastructure and compliance. End-to-end support for your digital projects."
         />
 
         <Overview />
