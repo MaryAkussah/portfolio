@@ -280,7 +280,7 @@ export default function Contact() {
                 role="status"
                 className="rounded-lg bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400"
               >
-                Thank you! Your message has been received, I'll get back to you soon.
+                Thank you! Your message has been received, I'll get back to you asap.
               </motion.p>
             )}
             {status === "error" && (
