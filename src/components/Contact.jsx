@@ -59,8 +59,8 @@ export default function Contact() {
     message: "",
   }));
   const [remember, setRemember] = useState(true);
-  const [honey, setHoney] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState("");
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -89,8 +89,8 @@ export default function Contact() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (honey) return; // spam bot filled the hidden field
     setStatus("sending");
+    setErrorMsg("");
     try {
       const res = await fetch(`${FORM_ENDPOINT}/${profile.email}`, {
         method: "POST",
@@ -115,7 +115,11 @@ export default function Contact() {
           ? { name: form.name, email: form.email, subject: "", message: "" }
           : { name: "", email: "", subject: "", message: "" }
       );
-    } catch {
+    } catch (err) {
+      // Network failures (offline, blocked by an extension) have no useful message for visitors.
+      const msg = err instanceof TypeError ? "" : err?.message || "";
+      console.error("Contact form error:", err);
+      setErrorMsg(msg);
       setStatus("error");
     }
   }
@@ -269,18 +273,6 @@ export default function Contact() {
               Remember my name and email on this device
             </label>
 
-            {/* honeypot: hidden from people, catches spam bots */}
-            <input
-              type="text"
-              name="_honey"
-              tabIndex={-1}
-              autoComplete="off"
-              value={honey}
-              onChange={(e) => setHoney(e.target.value)}
-              className="hidden"
-              aria-hidden="true"
-            />
-
             {status === "success" && (
               <motion.p
                 initial={{ opacity: 0, y: -8 }}
@@ -298,7 +290,8 @@ export default function Contact() {
                 role="alert"
                 className="rounded-lg bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-400"
               >
-                Sorry, something went wrong. Please try again or email me directly at{" "}
+                {errorMsg ? `${errorMsg} ` : "Sorry, something went wrong. "}
+                Please try again or email me directly at{" "}
                 <a href={`mailto:${profile.email}`} className="font-semibold underline">
                   {profile.email}
                 </a>
